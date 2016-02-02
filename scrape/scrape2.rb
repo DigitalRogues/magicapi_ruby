@@ -62,7 +62,7 @@ require 'mongo'
     client = Mongo::Client.new([ 'northrend.digitalrogues.com:27017' ], :database => 'magicAPI', :user => 'magic', :password => 'tech0410')
 
     #
-     result = client[:magicObj].insert_one({ date: hash["date"],lastUpdated: hash["lastUpdated"], closed: hash["closed"],
+     result = client[:magicObj].insert_one({ date: hash["date"],lastUpdated: hash["lastUpdated"], lastUpdated_unix: hash["lastUpdated_unix"], closed: hash["closed"],
        dlr:{crowdIndex:hash["dlrIndex"], times:hash["dlrTime"], forecast: hash["dlrForecast"]},
        dca:{crowdIndex:hash["dcaIndex"], times:hash["dcaTime"], forecast: hash["dcaForecast"]}
        })
@@ -86,6 +86,7 @@ require 'mongo'
   @mainHash["dlrForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/disneyland/")
   @mainHash["dcaForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/dca-disney-california-adventure/")
   @mainHash["lastUpdated"] = Time.new.strftime("%A, %d %b %Y %l:%M %p")
+  @mainHash["lastUpdated_unix"] = Time.new.to_i
   ap @mainHash
   mongoFunction(@mainHash)
 
