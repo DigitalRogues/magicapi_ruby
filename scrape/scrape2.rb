@@ -2,6 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'ap'
 require 'mongo'
+
 # {"parks":{"date":"Monday February 01 2016","disneyland":{"crowdIndex":"66","forecast":"hey, it’s alright","times":"10:00AM to 8:00PM"},"california_adventure":{"crowdIndex":"63","forecast":"hey, it’s alright","times":"10:00AM to 8:00PM"}},"lastUpdated":1454367613}
 
 #date - PST
@@ -57,14 +58,36 @@ require 'mongo'
   end
 
 
-  # dlrObj = Hash.new
-  # dcaObj = Hash.new
+  def mongoFunction(hash)
+    client = Mongo::Client.new([ 'northrend.digitalrogues.com:27017' ], :database => 'magicAPI', :user => 'magic', :password => 'tech0410')
 
-  waitHash = parseWait("http://www.mousewait.com/disneyland/")
-   waitHash["dlrForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/disneyland/")
-   waitHash["dcaForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/dca-disney-california-adventure/")
-   waitHash["lastUpdated"] = Time.new.strftime("%A, %d %b %Y %l:%M %p")
-   ap waitHash
+    #
+     result = client[:magicObj].insert_one({ date: hash["date"],lastUpdated: hash["lastUpdated"], closed: hash["closed"],
+       dlr:{crowdIndex:hash["dlrIndex"], times:hash["dlrTime"], forecast: hash["dlrForecast"]},
+       dca:{crowdIndex:hash["dcaIndex"], times:hash["dcaTime"], forecast: hash["dcaForecast"]}
+       })
+      puts result #=> returns 1, because 1 document was inserted.
+  end
+
+#   {
+#            "date" => "Monday February 01 2016",
+#        "dlrIndex" => "55",
+#        "dcaIndex" => "76",
+#          "closed" => "Closed for refurbishment: Mark Twain Riverboat,Sailing Ship Columbia,Davy Crockett's Explorer Canoes,Pirate's Lair on Tom Sawyer Island,Jungle Cruise,Autopia,\"it's a small world\",Fantasmic!,Disneyland Railroad,20th Century Music Company ",
+#         "dlrTime" => "10:00AM to 8:00PM",
+#         "dcaTime" => "10:00AM to 8:00PM",
+#     "dlrForecast" => "hey, it’s alright",
+#     "dcaForecast" => "hey, it’s alright",
+#     "lastUpdated" => "Monday, 01 Feb 2016  6:07 PM"
+# }
+
+
+  @mainHash = parseWait("http://www.mousewait.com/disneyland/")
+  @mainHash["dlrForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/disneyland/")
+  @mainHash["dcaForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/dca-disney-california-adventure/")
+  @mainHash["lastUpdated"] = Time.new.strftime("%A, %d %b %Y %l:%M %p")
+  ap @mainHash
+  mongoFunction(@mainHash)
 
   #
   # puts dlrObj["forecast"]
