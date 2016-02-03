@@ -1,0 +1,23 @@
+
+
+mongo:
+ image: cawaker/mongo:3.0.9
+ container_name: mongo-prod
+ ports:
+ - "27017:27017"
+
+ volumes_from:
+ - data-mongo
+ restart: always
+ command: mongod --auth
+ 
+#web:
+#  build: .
+#  ports:
+#   - "5000:5000"
+#  volumes:
+#   - .:/code
+#  links:
+#   - redis
+#redis:
+#  image: redis
