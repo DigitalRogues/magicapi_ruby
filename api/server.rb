@@ -16,8 +16,9 @@ end
 
 
 get '/' do
-
     "<html><pre>#{getRecord()}</pre></html>"
+end
 
-
+get '/json' do
+    "#{getRecord()}"
 end
