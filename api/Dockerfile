@@ -10,10 +10,10 @@ WORKDIR /usr/app
 COPY . /usr/app
 
 RUN apk add --update \
-  build-base \
-  && rm -rf /var/cache/apk/*
+  build-base tzdata\
+  && rm -rf /var/cache/apk/* && bundle install && apk del build-base
 
-RUN bundle install
+#RUN bundle install
 
 EXPOSE 4567
 
