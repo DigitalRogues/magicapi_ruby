@@ -2,7 +2,7 @@ require 'sinatra'
 require 'ap'
 require 'mongo'
 require 'json'
-
+set :bind, '0.0.0.0'
 
 def getRecord()
 client = Mongo::Client.new([ 'northrend.digitalrogues.com:27017' ], :database => 'magicAPI', :user => 'magic', :password => 'tech0410')
