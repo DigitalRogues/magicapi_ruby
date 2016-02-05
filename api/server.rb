@@ -2,6 +2,8 @@ require 'sinatra'
 require 'ap'
 require 'mongo'
 require 'json'
+require 'em/pure_ruby'
+
 set :bind, '0.0.0.0'
 
 def getRecord()

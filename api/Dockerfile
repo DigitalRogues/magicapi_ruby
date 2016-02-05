@@ -1,20 +1,18 @@
-FROM ruby:alpine
+FROM gliderlabs/alpine:3.3
 
-RUN mkdir /usr/app
+COPY . /usr/app/
+
 WORKDIR /usr/app
 
-#set the timezone so calls to time.new are in PST
-#ENV TZ=America/Los_Angeles
-#RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV DEV curl-dev ruby-dev build-base
 
-COPY . /usr/app
+ENV RUNTIME tzdata libxml2 libxslt libevent libffi ruby ruby-io-console ruby-bundler
 
-RUN apk add --update \
-  build-base tzdata\
-  && rm -rf /var/cache/apk/* && bundle install && apk del build-base
+#ncurses readline glib zlib yaml openssl
+  
+RUN apk add --no-cache $DEV  $RUNTIME && bundle install && apk del $DEV
 
-#RUN bundle install
 
-EXPOSE 4567
+
 
 CMD ["ruby","/usr/app/server.rb"]
