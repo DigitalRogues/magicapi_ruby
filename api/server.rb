@@ -12,6 +12,7 @@ client[:magicObj].find().sort(:lastUpdated_unix => -1).limit(1).each do |documen
     #=> Yields a BSON::Document.
     pretty  = JSON.pretty_generate(document)
     puts pretty
+	client.close
     return pretty
     end
 end
