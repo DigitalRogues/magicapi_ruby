@@ -1,0 +1,20 @@
+version: '2'
+services:
+ mongo:
+  image: mongo:3.2.1
+  container_name: mongo-prod
+  ports:
+  - "27017:27017"
+
+  volumes_from:
+  - container:data-mongo:rw
+  restart: always
+  command: mongod --auth
+
+ api:
+  build: ./api
+  container_name: magicapi 
+  ports:
+  - "80:4567"
+  restart: always
+
