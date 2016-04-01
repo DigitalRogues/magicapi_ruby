@@ -1,3 +1,4 @@
+#/usr/bin/ruby
 require 'open-uri'
 require 'nokogiri'
 require 'ap'
@@ -59,7 +60,7 @@ require 'mongo'
 
   def mongoFunction(hash)
 	@host = ENV['MONGO_1_PORT_27017_TCP_ADDR']
-    client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI', :user => 'magic', :password => 'tech0410')
+    client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI') #:user => 'magic', :password => 'tech0410')
 
     #
      result = client[:magicObj].insert_one({ date: hash["date"],lastUpdated: hash["lastUpdated"], lastUpdated_unix: hash["lastUpdated_unix"], closed: hash["closed"],
@@ -67,6 +68,7 @@ require 'mongo'
        dca:{crowdIndex:hash["dcaIndex"], times:hash["dcaTime"], forecast: hash["dcaForecast"]}
        })
       puts result #=> returns 1, because 1 document was inserted.
+	client.close
   end
 
 #   {
@@ -81,7 +83,7 @@ require 'mongo'
 #     "lastUpdated" => "Monday, 01 Feb 2016  6:07 PM"
 # }
 
-
+def mainCycle
   @mainHash = parseWait("http://www.mousewait.com/disneyland/")
   @mainHash["dlrForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/disneyland/")
   @mainHash["dcaForecast"] = parsePacked("http://www.isitpacked.com/live-crowd-trackers/dca-disney-california-adventure/")
@@ -89,6 +91,13 @@ require 'mongo'
   @mainHash["lastUpdated_unix"] = Time.new.to_i
   ap @mainHash
   mongoFunction(@mainHash)
+end
 
+	def kickOff
+	mainCycle
+	sleep(600)
+	kickOff
+	end
+ kickOff
   #
   # puts dlrObj["forecast"]

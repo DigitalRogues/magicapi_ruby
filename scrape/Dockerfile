@@ -12,8 +12,8 @@ ENV TZ=America/Los_Angeles
 
 #ncurses readline libxml2 libxslt libevent libffi glib  openssl yaml zlib
   
-RUN apk add --no-cache $DEV  $RUNTIME && bundle config build.nokogiri --use-system-libraries &&  bundle install && apk del $DEV \
-&& ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apk add --no-cache $DEV  $RUNTIME&& bundle config build.nokogiri --use-system-libraries &&  bundle install && apk del $DEV \
+ && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
 

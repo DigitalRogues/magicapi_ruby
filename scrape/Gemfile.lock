@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    awesome_print (1.6.1)
     bson (4.0.1)
     mini_portile2 (2.0.0)
     mongo (2.2.2)
@@ -12,8 +13,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   mongo (~> 2.1)
   nokogiri
-
-BUNDLED WITH
-   1.11.2
