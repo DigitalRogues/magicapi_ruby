@@ -1,5 +1,5 @@
 # magicapi_ruby
-Disneyland stats scraped and posted to json - Ruby style
+Disneyland stats scraped and posted to json - Ruby style.  I personally use this api to server data to a complication on my Watch, so all i have to do is flick my wrist and i see the current crowd index at disneyland resort.
 
 hosted at https://disney.digitalrecall.net
 
