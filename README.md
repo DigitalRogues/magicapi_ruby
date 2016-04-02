@@ -3,6 +3,30 @@ Disneyland stats scraped and posted to json - Ruby style
 
 hosted at https://disney.digitalrecall.net
 
+ example data - dlr is Disneyland, dca is California Adventure:
+
+```json
+{
+  "_id": {
+  "$oid": "56fff743075a0d0001b782d2"
+  },
+    "date": "Saturday April 02 2016",
+    "lastUpdated": "Saturday, 02 Apr 2016  9:45 AM",
+    "lastUpdated_unix": 1459615555,
+    "closed": "Closed for refurbishment: Sailing Ship Columbia,Davy Crockett's Explorer Canoes,Pirate's Lair on Tom Sawyer Island,Jungle Cruise,Autopia,Fantasmic!,Disneyland Railroad ",
+  "dlr": {
+    "crowdIndex": "70",
+    "times": "8:00AM to 12:00AM",
+    "forecast": "yup, it’s packed"
+   },
+  "dca": {
+    "crowdIndex": "30",
+    "times": "8:00AM to 10:00PM",
+    "forecast": "yup, it’s packed"
+   }
+}
+```
+
 ## Breakdown
 the ecosystem is broken down into 3 components all running in Docker containers
 
@@ -42,4 +66,4 @@ Usage is pretty simple, just need to install `docker` & `docker-compose`.
 
 In the root folder there is a file `docker-compose.yml` this controls the docker process and launches the api, the scraper and the mongodb and allows them all to communicate.
 
-`docker-compose up` will pull the images and start them up and from there you should be good to go. 
+`docker-compose up` will pull the images and start them up and from there you should be good to go.
