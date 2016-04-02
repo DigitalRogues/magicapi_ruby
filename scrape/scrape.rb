@@ -59,7 +59,7 @@ require 'mongo'
   end
 
   def mongoFunction(hash)
-	@host = ENV['MONGO_1_PORT_27017_TCP_ADDR']
+	@host = "mongo" #ENV['MONGO_1_PORT_27017_TCP_ADDR']
     client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI') #:user => 'magic', :password => 'tech0410')
 
     #

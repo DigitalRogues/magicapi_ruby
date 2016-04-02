@@ -7,7 +7,7 @@ require 'em/pure_ruby'
 set :bind, '0.0.0.0'
 
 def getRecord()
-@host = ENV['MONGO_1_PORT_27017_TCP_ADDR']
+@host = "mongo"
 client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI') #:user => 'magic', :password => 'tech0410')
 client[:magicObj].find().sort(:lastUpdated_unix => -1).limit(1).each do |document|
     #=> Yields a BSON::Document.

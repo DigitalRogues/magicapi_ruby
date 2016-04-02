@@ -3,13 +3,10 @@ services:
  mongo:
   image: mongo:3.2.1
   container_name: mongo-prod
-  ports:
-  - "27017:27017"
-
-  volumes_from:
-  - container:data-mongo:rw
+  #ports:
+  #- "27017:27017"
   restart: always
-  command: mongod --auth
+  command: mongod
   #logging:
   # driver: splunk
    #options:
@@ -17,13 +14,26 @@ services:
    # splunk-url: "http://localhost:8088"
 
  api:
-  build: ./api
+  image: cawaker/magicapi:0.2
+  dns:
+    - 8.8.8.8
+  links:
+    - mongo
+  restart: always
   container_name: magicapi 
   ports:
   - "80:4567"
-  restart: always
   #logging:
   # driver: splunk
   # options:
    # splunk-token: "F5665BC6-72C6-4D06-A6C8-806ED94461D6"
    # splunk-url: "http://localhost:8088"
+  
+ scrape:
+  image: cawaker/magicscrape:0.2
+  container_name: scrape 
+  dns:
+    - 8.8.8.8
+  links:
+    - mongo
+  restart: always
