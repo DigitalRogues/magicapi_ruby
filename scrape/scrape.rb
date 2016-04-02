@@ -23,8 +23,6 @@ require 'mongo'
 
 @mainHash = Hash.new
 
-
-
   def parsePacked(url)
     doc = Nokogiri::HTML(open(url))
     array = doc.css("[class=entry-content] div").first
@@ -60,7 +58,7 @@ require 'mongo'
 
   def mongoFunction(hash)
 	@host = "mongo" #ENV['MONGO_1_PORT_27017_TCP_ADDR']
-    client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI') #:user => 'magic', :password => 'tech0410')
+    client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI')
 
     #
      result = client[:magicObj].insert_one({ date: hash["date"],lastUpdated: hash["lastUpdated"], lastUpdated_unix: hash["lastUpdated_unix"], closed: hash["closed"],

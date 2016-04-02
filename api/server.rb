@@ -8,7 +8,7 @@ set :bind, '0.0.0.0'
 
 def getRecord()
 @host = "mongo"
-client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI') #:user => 'magic', :password => 'tech0410')
+client = Mongo::Client.new([ "#{@host}:27017" ], :database => 'magicAPI')
 client[:magicObj].find().sort(:lastUpdated_unix => -1).limit(1).each do |document|
     #=> Yields a BSON::Document.
     pretty  = JSON.pretty_generate(document)
